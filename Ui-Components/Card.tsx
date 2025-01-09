@@ -1,4 +1,10 @@
 "use client"
+
+import { FiSend } from "react-icons/fi";
+import { Button } from "./Button";
+import { DropDown } from "./Dropdown";
+import { useState } from "react";
+
 interface CardProps {
     image: string;
     index: number;
@@ -7,8 +13,14 @@ interface CardProps {
     category: string;
     location: string;
     Contact: string;
+    timing: string
 }
-export const Card = ({ image, index, title, shortDescription, category, location, Contact }: CardProps) => {
+export const Card = ({ image, index, title, shortDescription, category, location, Contact, timing }: CardProps) => {
+
+    const [isHovered, setIsHovered] = useState(false);
+    const handleClick = () => {
+        console.log("askvhbvsd");
+    }
     return (
         <div>
             <div
@@ -24,20 +36,7 @@ export const Card = ({ image, index, title, shortDescription, category, location
                 <div className="absolute bg-gradient-to-l from-[#a3beff] to-[#5084ff]  top-[-100%] left-0  rounded-xl  right-0 group-hover:top-0 transition-top duration-[150ms] ease-in-out z-20 p-4"
                 >
                     <h5 className="text-xl font-extrabold text-white text-left">{title}</h5>
-                    {Array.isArray(shortDescription) ? (
-                        <ul className="text-base mb-1 text-white text-left list-inside pl-0 mt-2 ">
-                            {shortDescription.map((item, idx) => (
-                                <li key={idx} className="list-disc">
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="text-base mb-1 text-white text-left mt-2">
-                            {shortDescription}
-                        </p>
-                    )}
-
+                    <DropDown shortDescription={shortDescription} />
                 </div>
 
                 <div className="p-6 bg-white flex flex-col justify-between flex-grow z-10 relative">
@@ -54,19 +53,19 @@ export const Card = ({ image, index, title, shortDescription, category, location
                         >
                             Operation Hours
                         </h3>
-                        {/* <div className="flex text-black justify-center ">
+                        <div className="flex text-black justify-center ">
                             <p className="text-mb font-medium font-inter text-black ">
-                                {card.category === "Riverside Gurdwara Pop-Up"
+                                {category === "Riverside Gurdwara Pop-Up"
                                     ? "Sunday :"
-                                    : card.category === "At-home Test Kit"
+                                    : category === "At-home Test Kit"
                                         ? ""
                                         : "Mon - Fri : "}
                             </p>
                             <p className="text-black font-medium ml-2">
                                 {" "}
-                                {card.category === "At-home Test Kit" ? "We bring the lab to your doorstep!" : card.timing}
+                                {category === "At-home Test Kit" ? "We bring the lab to your doorstep!" : timing}
                             </p>
-                        </div> */}
+                        </div>
 
                         <h3
                             className="text-lg mt-2 p font-bold font-inter mb-[-4px] bg-[#5084ff]"
@@ -111,6 +110,25 @@ export const Card = ({ image, index, title, shortDescription, category, location
                         </div>
                     </div>
                     <div className="flex justify-center mt-auto">
+                        <Button className="px-4 py-2 rounded-full  flex items-center gap-2 text-lg font-bold 
+                        shadow-[-5px_-5px_10px_rgba(255,_255,_255,_0.8),_5px_5px_10px_rgba(0,_0,_0,_0.25)]
+                       transition-all
+                          text-white
+                         bg-green-500
+                       hover:bg-green-300" onClick={handleClick} disable={false} name="Book Now" Icon={<FiSend />}
+                            style={{
+                                background: isHovered
+                                    ? "#6e9eff"
+                                    : "#5084ff",
+
+                                boxShadow: isHovered
+                                    ? "0px 4px 15px rgba(0, 0, 0, 0.2)" 
+                                    : "0px 4px 10px rgba(0, 0, 0, 0.1)", 
+                            }}
+                        />
+
+
+
                         {/* <NeumorphismButton cardData={{ ...card, imageUrl: images[index % images.length] }} /> */}
                     </div>
                 </div>

@@ -184,7 +184,7 @@ export const HoverCards = () => {
             ref={carouselRef} className="flex overflow-x-auto rounded-xl  space-x-8 p-4 mb-2 pb-2 scrollbar-hide">
 
             {cardData.slice(0, 8).map((card, index) => (
-             <Card image={card.image}  index={index} title={card.title} shortDescription={card.shortDescription} category={card.category} location={card.location} Contact={card.Contact}
+             <Card image={card.image}  index={index} title={card.title} timing={card.timing} shortDescription={card.shortDescription} category={card.category} location={card.location} Contact={card.Contact}
               />
             ))}
           </div>
