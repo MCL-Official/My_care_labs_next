@@ -21,7 +21,7 @@ interface BlogCardGridProps {
 export default function Blog_Card_grid({ blogData, loading }: BlogCardGridProps) {
     const route = useRouter()
     const handleNavigation = (id: string, blogName: string) => {
-        console.log("Navigate to:", id, blogName);
+        // console.log("Navigate to:", id, blogName);
         const formattedBlogName = blogName
             .replace(/[&%@!#^*+\|"'<>?]/g, '-')
             .replace(/\s+|\.|,|:/g, '-') 
@@ -34,7 +34,7 @@ export default function Blog_Card_grid({ blogData, loading }: BlogCardGridProps)
     };
 
     const handleShare = (item: Blog) => {
-        console.log("Share blog:", item);
+        // console.log("Share blog:", item);
     };
 
     const formatDate = (dateString: string) => {
