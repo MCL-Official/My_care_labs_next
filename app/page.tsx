@@ -1,6 +1,8 @@
 import BlogComponent from "@/components/BlogComponent";
 import { Communities } from "@/components/Communities";
+import { Insurance } from "@/components/Insurance";
 import UtaComp from "@/components/UtaComp";
+import { YT_Video } from "@/components/YT_Video";
 import Image from "next/image";
 
 {/* <Image
@@ -17,6 +19,8 @@ export default function Home() {
       <UtaComp/>
       <Communities/>
       <BlogComponent/>
+      <Insurance/>
+      <YT_Video/>
     </div>
   );
 }
