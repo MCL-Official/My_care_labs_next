@@ -22,8 +22,8 @@ interface Blog {
     tags: [];
     routename: string
     views: number
-    createdAt: any
-    updatedAt: any
+    createdAt: string
+    updatedAt: string
     status: string
 }
 

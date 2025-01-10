@@ -1,39 +1,40 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Image from "next/image";
 import { FiMenu, FiArrowRight, FiX, FiChevronDown } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { useMotionValueEvent, AnimatePresence, useScroll, motion } from "framer-motion";
 import useMeasure from "react-use-measure";
-import { IoCall } from "react-icons/io5";
-import logo1 from "../../public/assets/logo1.png";
-import { cardData, images, testingSolutions } from '../utility/cardData'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPhone, faStar, faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import logoCh from "../../public/assets/mycare_logo_ch.png";
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { cardData, images, testingSolutions } from '../utility/cardData'
+import { faPhone, faStar, faChevronDown, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 
+interface ComponentProps {
+  handleClick?: () => void; 
+}
+
+interface LinkData {
+  text:string
+  href: string;
+  component?: React.ComponentType<ComponentProps>;
+}
+
+
 const Navbar = () => {
-  return (
-    <>
-      <FlyoutNav />
-    </>
-  );
+  return <FlyoutNav />;
 };
 
 const FlyoutNav = () => {
   const pathname = usePathname();
-  const data = { bg: "#00000" };
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
-  const [lastScrollY, setLastScrollY] = useState(0);
   const isHome = pathname === "/";
 
-  // Handle scroll direction
-  useMotionValueEvent(scrollY, "change", (latest: any) => {
+  useMotionValueEvent(scrollY, "change", (latest: number) => {
     const previous = scrollY.getPrevious();
     setScrolled(latest > 20);
     if (previous !== undefined) {
@@ -43,17 +44,13 @@ const FlyoutNav = () => {
         setHidden(false);
       }
     }
-
-    setLastScrollY(latest);
   });
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ease-out lg:px-12 ${hidden ? "-translate-y-full" : "translate-y-0"
-        } ${scrolled || !isHome
-          ? "bg-white py-2 shadow-xl"
-          : "bg-white py-2 shadow-none"
-        }`}
+      className={`fixed top-0 z-50 w-full text-white transition-all duration-300 ease-out lg:px-12 ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      } ${scrolled || !isHome ? "bg-white py-2 shadow-xl" : "bg-white py-2 shadow-none"}`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <Logo />
@@ -67,19 +64,21 @@ const FlyoutNav = () => {
   );
 };
 
-const Logo = ({ color = "white" }) => {
+const Logo = () => {
   return (
     <Link href="/" className="flex items-start md:mr-5 xl:mr-0 2xl:ml-[-70px] space-x-3 rtl:space-x-reverse">
-      <img
+      <Image
         src="/assets/mycare_logo_ch.png"
         className="max-w-[250px] max-h-[75px]"
         alt="My care labs"
+        width={400}
+        height={400}
       />
     </Link>
   );
 };
 
-const Links = ({ isHome, scrolled }: any) => {
+const Links = ({ isHome, scrolled }: { isHome: boolean; scrolled: boolean }) => {
   return (
     <div className="flex items-center gap-6">
       {LINKS.map((l) => (
@@ -96,14 +95,30 @@ const Links = ({ isHome, scrolled }: any) => {
     </div>
   );
 };
+interface FlyoutContentProps {
+  handleClick?: () => void; 
+}
 
-const NavLink = ({ children, href, FlyoutContent, isHome, scrolled }: any) => {
+const NavLink = ({
+  children,
+  href,
+  FlyoutContent,
+  isHome,
+  scrolled,
+}: {
+  children: React.ReactNode;
+  href: string;
+  FlyoutContent?: React.ComponentType<FlyoutContentProps>;
+  isHome: boolean;
+  scrolled: boolean;
+}) => {
   const [open, setOpen] = useState(false);
   const showFlyout = FlyoutContent && open;
 
   const handleClick = () => {
-    setOpen(false); // Close the dropdown on link click
+    setOpen(false);
   };
+
   return (
     <div
       onMouseEnter={() => setOpen(true)}
@@ -113,8 +128,9 @@ const NavLink = ({ children, href, FlyoutContent, isHome, scrolled }: any) => {
       <Link
         href={href}
         onClick={handleClick}
-        className={`relative font-semibold no-underline text-xl ${isHome ? (scrolled ? "text-black" : "text-black") : "text-black"
-          }`}
+        className={`relative font-semibold no-underline text-xl ${
+          isHome ? (scrolled ? "text-black" : "text-black") : "text-black"
+        }`}
       >
         {children}
         <span
@@ -134,9 +150,7 @@ const NavLink = ({ children, href, FlyoutContent, isHome, scrolled }: any) => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="absolute left-1/2 top-12 bg-white text-black"
           >
-            <div className="absolute -top-6 left-0 right-0 h-6 bg-transparent" />
-            <div className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-white" />
-            <FlyoutContent handleClick={handleClick} />
+            <FlyoutContent />
           </motion.div>
         )}
       </AnimatePresence>
@@ -144,12 +158,13 @@ const NavLink = ({ children, href, FlyoutContent, isHome, scrolled }: any) => {
   );
 };
 
-const CTAs = ({ isHome, scrolled }: any) => {
+const CTAs = ({ isHome, scrolled }: { isHome: boolean; scrolled: boolean }) => {
   const data = () => {
     window.location.href = "https://patient-us.creliohealth.com/patient/login";
   };
   return (
     <div className="flex items-center gap-3">
+      {/* Add your CTA buttons here */}
       <button
         className={`flex items-center gap-2 rounded-lg border-2 px-4 py-2 font-semibold transition-colors ${isHome
           ? scrolled
@@ -190,7 +205,19 @@ const CTAs = ({ isHome, scrolled }: any) => {
     </div>
   );
 };
-const MobileMenuLink = ({ children, href, FoldContent, setMenuOpen }: any) => {
+interface MobileMenuLinkProps {
+  children: React.ReactNode;
+  href: string;
+  FoldContent?: React.ComponentType;
+  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MobileMenuLink: React.FC<MobileMenuLinkProps> = ({
+  children,
+  href,
+  FoldContent,
+  setMenuOpen,
+}) => {
   const [ref, { height }] = useMeasure();
   const [open, setOpen] = useState(false);
 
@@ -254,11 +281,11 @@ const MobileMenuLink = ({ children, href, FoldContent, setMenuOpen }: any) => {
   );
 };
 
-const MobileMenu = ({ isHome, scrolled }: any) => {
+const MobileMenu = ({ isHome, scrolled }: { isHome: boolean; scrolled: boolean }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="block lg:hidden">
-      <button
+         <button
         onClick={() => setOpen(true)}
         className={`block text-xl ${isHome ? (scrolled ? "text-neutral-950" : "text-white") : "text-neutral-950"
           }`}
@@ -275,8 +302,9 @@ const MobileMenu = ({ isHome, scrolled }: any) => {
             transition={{ duration: 0.15, ease: "easeOut" }}
             className="fixed left-0 top-0 flex h-screen w-full flex-col bg-white"
           >
+            {/* Mobile Menu Content */}
             <div className="flex items-center justify-between p-3">
-              <Logo color="black" />
+              <Logo  />
               <button onClick={() => setOpen(false)}>
                 <FiX className="text-xl text-neutral-950" />
               </button>
@@ -303,46 +331,56 @@ const MobileMenu = ({ isHome, scrolled }: any) => {
   );
 };
 
-const AboutUsContent = ({ handleClick }: any) => {
+
+interface CardProps{
+  id: number;
+  category: string;
+  title: string;
+  shortDescription: string;
+  longDescription: string;
+  timing: string;
+  location: string;
+}
+// const AboutUsContent = ({ handleClick }: any) => {
+const AboutUsContent = () => {
   // const navigate = useNavigate(); // Initialize useNavigate
 
 
-  // const sample = {{...cardData , imageUrl: images[index % images.length] }}
-  // @ts-ignore
+  // const sample = {{...cardData , imageUrl: images[index % images.length] }} 
   if (!cardData || !images || cardData.length === 0 || images.length === 0) {
     return null; // Return null to render nothing if the arrays are not available
   }
 
-  const formatCategoryName = (categoryName: any) => {
-    return categoryName
-      .replace(/[&%@!#^*+\|"'<>?]/g, '-') // Replaces special characters with hyphens
-      .replace(/\s+|\.|,|:/g, '-') // Replaces spaces, dots, commas, and colons with hyphens
-      .replace(/-+/g, '-') // Removes consecutive hyphens
-      .replace(/-+$/, '') // Removes trailing hyphens
-      .toLowerCase();
-  };
+  // const formatCategoryName = (categoryName: String) => {
+  //   return categoryName
+  //     .replace(/[&%@!#^*+\|"'<>?]/g, '-') // Replaces special characters with hyphens
+  //     .replace(/\s+|\.|,|:/g, '-') // Replaces spaces, dots, commas, and colons with hyphens
+  //     .replace(/-+/g, '-') // Removes consecutive hyphens
+  //     .replace(/-+$/, '') // Removes trailing hyphens
+  //     .toLowerCase();
+  // };
 
-  const handleBookNowClick = (cardData: any) => {
-    console.log(cardData, 'sdvkjvnsvnsdjvsdnjvcnsjsdnv');
+  // const handleBookNowClick = (cardData: any) => {
+  //   console.log(cardData, 'sdvkjvnsvnsdjvsdnjvcnsjsdnv');
 
-    const formattedCategory = formatCategoryName(cardData.category);
-    // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData: cardData } });
+  //   const formattedCategory = formatCategoryName(cardData.category);
+  //   // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData: cardData } });
 
-    // THE BOOKING SYSTEM TTHAT I HAVE CREATED 
+  //   // THE BOOKING SYSTEM TTHAT I HAVE CREATED 
 
-    //   if(cardData?.title=="PCR COVID-19, RSV, and Influenza A/B Test Kit"){
-    //     navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData } });
-    //  }else{
+  //   //   if(cardData?.title=="PCR COVID-19, RSV, and Influenza A/B Test Kit"){
+  //   //     navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData } });
+  //   //  }else{
 
-    //    // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData } });
-    //    navigate(`/covid-test-locations/${formattedCategory}`, { state: { cardData } });
-    //    // navigate(`/bookingcompletion`, { state: { cardData } });
-    //    console.log("Navigating with card data:", cardData);
-    //  }
-    // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData: card } });
-    // console.log("Navigating with card data:", card);
-    handleClick();
-  };
+  //   //    // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData } });
+  //   //    navigate(`/covid-test-locations/${formattedCategory}`, { state: { cardData } });
+  //   //    // navigate(`/bookingcompletion`, { state: { cardData } });
+  //   //    console.log("Navigating with card data:", cardData);
+  //   //  }
+  //   // navigate(`/bookingcompletion/${formattedCategory}`, { state: { cardData: card } });
+  //   // console.log("Navigating with card data:", card);
+  //   handleClick();
+  // };
   return (
     <div className="grid h-fit w-full grid-cols-12 shadow-xl lg:h-72 lg:w-[600px] lg:shadow-none xl:w-[950px] xl:grid-cols-12">
       <div className="col-span-12 flex flex-col justify-between bg-neutral-950 p-4 lg:col-span-4 xl:col-span-4">
@@ -366,20 +404,20 @@ const AboutUsContent = ({ handleClick }: any) => {
         </Link>
       </div>
       <div className="col-span-12 grid grid-cols-1 gap-3 bg-white p-3 lg:col-span-8 xl:col-span-8 xl:grid-cols-3">
-        {/* @ts-ignore */}
-        {cardData.slice(0, 6).map((card: any, index: any) => (
+
+        {cardData.slice(0, 6).map((card: CardProps) => (
           <div
             key={card?.id}
             className="rounded-lg overflow-hidden border border-neutral-200 bg-white shadow-md transition-transform transform hover:scale-105 flex flex-col justify-between"
           >
-            <img
-              src={images[index % images.length]}
+            {/* <img
+              // src={images[index % images.length]}
               alt={card?.title}
               className="h-24 w-full object-cover" // Adjusted image height for larger size
-            />
+            /> */}
             <div className="p-3 flex-grow flex flex-col justify-between">
               <div>
-                <h2 className="font-bold text-sm my-1">{card?.card?.category}</h2>
+                {/* <h2 className="font-bold text-sm my-1">{card?.card?.category}</h2> */}
                 <p className="text-xs text-gray-800 mt-1">
                   <strong>Hours:</strong> {card?.timing}
                 </p>
@@ -403,10 +441,20 @@ const AboutUsContent = ({ handleClick }: any) => {
 };
 
 
-const PricingContent1 = () => {
-  const [isHovered, setIsHovered] = useState(null);
+interface Test {
+  name: string;
+  route: string;
+}
 
-  const handleMouseEnter = (index: any) => {
+interface TestingSolution {
+  category: string;
+  route: string;
+  tests: Test[];
+}
+const PricingContent1 = () => {
+  const [isHovered, setIsHovered] = useState<number | null>(null);
+
+  const handleMouseEnter = (index: number) => {
     setIsHovered(index);
   };
 
@@ -417,8 +465,8 @@ const PricingContent1 = () => {
   return (
     <div className="w-full bg-white border-2 border-slate-300 shadow-none lg:w-[340px] p-2 rounded-lg ">
       <div className="grid grid-cols-2 mt-2 lg:grid-cols-1">
-        {/* @ts-ignore */}
-        {testingSolutions.map((solution: any, index: any) => (
+    
+        {testingSolutions.map((solution: TestingSolution, index: number) => (
           <div key={index} className="mb-3 space-y-3  relative">
             {/* Main Category */}
             <Link
@@ -449,7 +497,7 @@ const PricingContent1 = () => {
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={handleMouseLeave}
               >
-                {solution.tests.map((test: any, testIndex: any) => (
+                {solution.tests.map((test: Test, testIndex: number) => (
                   <Link
                     key={testIndex}
                     href={test?.route}
@@ -470,9 +518,9 @@ const PricingContent1 = () => {
 
 
 const PricingContent = () => {
-  const [isHovered, setIsHovered] = useState(null);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
 
-  const handleMouseEnter = (index: any) => {
+  const handleMouseEnter = (index: number) => {
     setIsHovered(index);
   };
 
@@ -493,26 +541,26 @@ const PricingContent = () => {
           >
             About Us
           </Link>
-          {/* {isHovered === 1 && (
+          {isHovered === 1 && (
             <div
               className="absolute top-0 left-full w-[250px] bg-slate-50 shadow-lg p-3 space-y-2"
               onMouseEnter={() => handleMouseEnter(1)}
               onMouseLeave={handleMouseLeave}
             >
               <Link
-                to="/company-overview"
+                href="/company-overview"
                 className="block text-lg text-black no-underline hover:underline"
               >
                 Company Overview
               </Link>
               <Link
-                to="/company-mission"
+                href="/company-mission"
                 className="block text-lg text-black no-underline hover:underline"
               >
                 Our Mission
               </Link>
             </div>
-          )} */}
+          )}
 
           <Link
             href="/management-team"
@@ -548,9 +596,12 @@ const PricingContent = () => {
     </div>
   );
 };
+
 export default Navbar;
 
-const LINKS = [
+
+
+const LINKS: LinkData[] = [
   {
     text: "Testing Locations",
     href: "/covid-test-locations",

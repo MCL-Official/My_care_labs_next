@@ -1,19 +1,17 @@
 "use client"
 import { Card } from "@/Ui-Components/Card";
-import { useEffect, useRef, useState } from "react";
+import {  useRef } from "react";
 import {
     MdOutlineKeyboardArrowRight,
     MdOutlineKeyboardArrowLeft,
   } from "react-icons/md";
   
 export const HoverCards = () => {
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const [drawerContent, setDrawerContent] = useState("");
     const carouselRef = useRef(null);
   
     
   const scrollLeft = () => {
-    // @ts-ignore
+    // @ts-expect-error jjsdkjdsvsd
     carouselRef.current.scrollBy({
         top: 0,
         left: -400,
@@ -22,7 +20,7 @@ export const HoverCards = () => {
   };
   
   const scrollRight = () => {
-      // @ts-ignore
+      // @ts-expect-error hjbjbsdd
       carouselRef.current.scrollBy({
           top: 0,
       left: 400,
@@ -33,18 +31,15 @@ export const HoverCards = () => {
 // useEffect(() => {
 //     const handleTouchStart = (e) => {
 //         const touchStartX = e.touches[0].clientX;
-//         // @ts-ignore
 //         carouselRef.current.touchStartX = touchStartX;
 //     };
     
 //     const handleTouchMove = (e) => {
-//         // @ts-ignore
 //         if (!carouselRef.current.touchStartX) {
 //             return;
 //         }
         
 //         const touchEndX = e.touches[0].clientX;
-//         // @ts-ignore
 //         const touchDiffX = carouselRef.current.touchStartX - touchEndX;
         
 //         if (touchDiffX > 50) {
@@ -53,20 +48,16 @@ export const HoverCards = () => {
 //             scrollLeft();
 //         }
         
-//         // @ts-ignore
 //         carouselRef.current.touchStartX = null;
 //     };
     
 //     const carousel = carouselRef.current;
-//     // @ts-ignore
 //     carousel.addEventListener("touchstart", handleTouchStart);
-//     // @ts-ignore
 //     carousel.addEventListener("touchmove", handleTouchMove);
     
 //     return () => {
-//         // @ts-ignore
+//        
 //         carousel.removeEventListener("touchstart", handleTouchStart);
-//         // @ts-ignore
 //       carousel.removeEventListener("touchmove", handleTouchMove);
 //     };
 //   }, []);
@@ -184,7 +175,7 @@ export const HoverCards = () => {
             ref={carouselRef} className="flex overflow-x-auto rounded-xl  space-x-8 p-4 mb-2 pb-2 scrollbar-hide">
 
             {cardData.slice(0, 8).map((card, index) => (
-             <Card image={card.image}  index={index} title={card.title} timing={card.timing} shortDescription={card.shortDescription} category={card.category} location={card.location} Contact={card.Contact}
+             <Card image={card.image}  key={card.id} index={index} title={card.title} timing={card.timing} shortDescription={card.shortDescription} category={card.category} location={card.location} Contact={card.Contact}
               />
             ))}
           </div>

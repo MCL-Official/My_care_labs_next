@@ -36,9 +36,9 @@ const Card_rotation = () => {
           icon: faHome // Solid icon representing home-based care
         }
       ];
-      const [selectedCard, setSelectedCard] = useState(null);
+      const [selectedCard, setSelectedCard] = useState<number>(0);
 
-      const handleCardClick = (index:any) => {
+      const handleCardClick = (index:number):void => {
         setSelectedCard(index);
         // scrollToAuth();
       };

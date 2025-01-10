@@ -10,8 +10,8 @@ const Timer = () => {
         seconds: "00",
     });
 
-    const formatNumber = (number: any) => {
-        return number < 10 ? `0${number}` : number;
+    const formatNumber = (number: number): string => {
+        return number < 10 ? `0${number}` : `${number}`; 
     };
 
     useEffect(() => {

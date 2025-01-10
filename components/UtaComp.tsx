@@ -1,4 +1,5 @@
 import Timer from "./Client_components/Timer"; 
+import Image from "next/image";
 
 const UtaComp = () => {
   return (
@@ -28,10 +29,8 @@ const UtaComp = () => {
             Launching in:
           </div>
 
-          {/* Timer Component */}
           <Timer />
 
-          {/* Buttons */}
           <div className="flex flex-col items-center gap-4 justify-center mt-4">
             <a
               href="/uti"
@@ -56,16 +55,18 @@ const UtaComp = () => {
             accurate diagnostics.
           </div>
           {/* Circle Behind */}
-          <img
+          <Image
             src='/assets/uti-circle1.png'
-            // width={10}
+            width={300}
+            height={300}
             alt="Circle Design"
             className="absolute top-2/4 left-1/4 w-[400px] -translate-y-1/2 sm:w-[500px] xl:w-[800px] -z-10"
           />
-          {/* Lady Image */}
-          <img
+          <Image
             src='/assets/uti-lady2.png'
             alt="Doctor"
+            width={400}
+            height={400}
             className="absolute bottom-0 right-0 md:right-[-10%] w-[400px] md:w-[500px] lg:w-[650px] z-10"
           />
         </div>
