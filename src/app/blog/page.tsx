@@ -1,4 +1,4 @@
-import Blog_Card_grid from "@/Ui-Components/Blog_Card_grid";
+import Blog_Card_grid from "@/components/ui/Blog_Card_grid";
 import axios from "axios"
 
 export default async function Blog() {

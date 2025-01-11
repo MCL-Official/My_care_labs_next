@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
-import Blog_Card from "@/Ui-Components/Blog_Card";
+import Blog_Card from "@/components/ui/Blog_Card";
 
 interface Blog {
     _id: number;

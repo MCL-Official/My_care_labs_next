@@ -1,4 +1,4 @@
-import { Card } from "@/Ui-Components/Card";
+import { Card } from "@/components/ui/Card";
 
 export const CovidTestLocations=()=>{
     const cardData = [

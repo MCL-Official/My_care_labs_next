@@ -1,5 +1,5 @@
 "use client"
-import { Card } from "@/Ui-Components/Card";
+import { Card } from "@/components/ui/Card";
 import {  useRef } from "react";
 import {
     MdOutlineKeyboardArrowRight,
