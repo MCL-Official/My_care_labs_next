@@ -5,7 +5,7 @@ export default async function Blog() {
     const blogsPerPage = 9;
     const page = 1
     const response = await axios.get(`https://bookingbackend.mycaretrading.com/admin/blog/working?page=${page}&limit=${blogsPerPage}`)
-    console.log(response.data.blogs);
+    // console.log(response.data.blogs);
     const blogs = response.data.blogs
 
     return (

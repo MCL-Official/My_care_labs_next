@@ -1,4 +1,4 @@
-import Card_rotation from "./Client_components/Card_rotation"
+import Card_rotation from "../Client_components/Card_rotation"
 
 export const Communities = () => {
 

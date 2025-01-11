@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { FaShareAlt } from "react-icons/fa";
 
@@ -20,17 +19,17 @@ interface BlogCardGridProps {
 
 export default function Blog_Card_grid({ blogData, loading }: BlogCardGridProps) {
     const route = useRouter()
-    const handleNavigation = (id: string, blogName: string) => {
+    const handleNavigation = (id: string, blogName: any) => {
         // console.log("Navigate to:", id, blogName);
-        const formattedBlogName = blogName
+        const formattedBlogName = blogName.meta_title
             .replace(/[&%@!#^*+\|"'<>?]/g, '-')
-            .replace(/\s+|\.|,|:/g, '-') 
-            .replace(/-+/g, '-') 
-            .replace(/-+$/, '') 
+            .replace(/\s+|\.|,|:/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/-+$/, '')
             .toLowerCase();
 
         const encodedBlogName = encodeURIComponent(formattedBlogName);
-        route.push(`/blog/${encodedBlogName}`)
+        route.push(`/blog/${encodedBlogName}/${id}`)
     };
 
     const handleShare = (item: Blog) => {
@@ -56,7 +55,7 @@ export default function Blog_Card_grid({ blogData, loading }: BlogCardGridProps)
                         key={item._id}
                     >
                         <a
-                            onClick={() => handleNavigation(item._id, item.meta_title)}
+                            onClick={() => handleNavigation(item._id, item)}
                             className="block no-underline"
                         >
                             <img

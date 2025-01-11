@@ -4,6 +4,10 @@ import { FiSend } from "react-icons/fi";
 import { Button } from "./Button";
 import { DropDown } from "./Dropdown";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+// import { useRouter } from 'next/router'
+// import {dataState} from "../../app/context/DataContext"
 
 interface CardProps {
   image: string;
@@ -27,10 +31,45 @@ export const Card = ({
   timing,
 }: CardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter()
+  // const setData = useSetRecoilState(dataState);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleClick = () => {
     console.log("Button clicked");
+
+    const queryParameters = new URLSearchParams({
+      title,
+      category,
+      location,
+    }).toString();
+    const formattedCategory = category
+      .replace(/[&%@!#^*+\|"'<>?]/g, '-')
+      .replace(/\s+|\.|,|:/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/-+$/, '')
+      .toLowerCase();
+
+    // router.push({
+    //   pathname: `/covid-test-locations/${formattedCategory}`,
+    //   query: { pid: post.id },
+    // })
+    if (title === "Bay Area Mobile Testing") {
+      // setData({ title: "Dynamic Title", content: "Dynamic Content" });
+      router.push(`/covid-test-locations/${formattedCategory}`);
+    } else if (title === "Fremont Laboratory") {
+      router.push(`/covid-test-locations/${formattedCategory}`);
+    } else if (title === "At-Home Test Kit") {
+      router.push(`/covid-test-locations/${formattedCategory}`);
+    } else if (title === "Riverside Mobile Testing") {
+      router.push(`/covid-test-locations/${formattedCategory}`);
+    } else if (title === "Riverside Gurdwara") {
+      router.push(`/covid-test-locations/${formattedCategory}`);
+    }
+    else {
+      router.push(`/bookingcompletion/${formattedCategory}`);
+      // navigate(`/bookingcompletion`, { state: { cardData } });
+    }
   };
 
   useEffect(() => {
@@ -69,7 +108,7 @@ export const Card = ({
 
   return (
     <div
-      key={index} 
+      key={index}
       className="relative group rounded-xl overflow-hidden flex-shrink-0 w-80 h-112 transition-transform transform hover:shadow-2xl shadow-lg flex flex-col"
     >
       <img
@@ -104,8 +143,8 @@ export const Card = ({
               {category === "Riverside Gurdwara Pop-Up"
                 ? "Sunday :"
                 : category === "At-home Test Kit"
-                ? ""
-                : "Mon - Fri : "}
+                  ? ""
+                  : "Mon - Fri : "}
             </p>
             <p className="text-black font-medium ml-2">
               {category === "At-home Test Kit"
@@ -148,12 +187,12 @@ export const Card = ({
               {category === "Northern California: Fremont Lab"
                 ? "Walk-ins Welcome!"
                 : category === "Riverside City Mobile Testing"
-                ? " Appointment only"
-                : category === "Bay Area Mobile Testing"
-                ? " Appointment only"
-                : category === "At-Home Test Kit"
-                ? "At Your Home"
-                : ""}
+                  ? " Appointment only"
+                  : category === "Bay Area Mobile Testing"
+                    ? " Appointment only"
+                    : category === "At-Home Test Kit"
+                      ? "At Your Home"
+                      : ""}
             </span>
           </div>
         </div>
@@ -164,12 +203,12 @@ export const Card = ({
             disable={false}
             name="Book Now"
             Icon={<FiSend />}
-            // style={{
-            //   background: isHovered ? "#6e9eff" : "#5084ff",
-            //   boxShadow: isHovered
-            //     ? "0px 4px 15px rgba(0, 0, 0, 0.2)"
-            //     : "0px 4px 10px rgba(0, 0, 0, 0.1)",
-            // }}
+          // style={{
+          //   background: isHovered ? "#6e9eff" : "#5084ff",
+          //   boxShadow: isHovered
+          //     ? "0px 4px 15px rgba(0, 0, 0, 0.2)"
+          //     : "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          // }}
           />
         </div>
       </div>

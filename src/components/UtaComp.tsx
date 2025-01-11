@@ -1,4 +1,4 @@
-import Timer from "./Client_components/Timer"; 
+import Timer from "../Client_components/Timer"; 
 import Image from "next/image";
 
 const UtaComp = () => {

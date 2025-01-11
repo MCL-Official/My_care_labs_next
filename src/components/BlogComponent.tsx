@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BlogSlider } from "./Client_components/BlogSlider";
+import { BlogSlider } from "../Client_components/BlogSlider";
 
 export default async function BlogComponent() {
 

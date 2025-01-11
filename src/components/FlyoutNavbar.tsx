@@ -8,7 +8,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useMotionValueEvent, AnimatePresence, useScroll, motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { cardData, images, testingSolutions } from '../utility/cardData'
+import { cardData, images, testingSolutions } from '../../utility/cardData'
 import { faPhone, faStar, faChevronDown, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 
@@ -186,7 +186,7 @@ const CTAs = ({ isHome, scrolled }: { isHome: boolean; scrolled: boolean }) => {
           : "bg-orange-600 text-white"
           }`}
       >
-        <FontAwesomeIcon icon={faPhone} size="lg" />
+        <FontAwesomeIcon icon={faPhone}  />
         <span>+1-800-790-4550</span>
       </a>
       <a
@@ -254,7 +254,6 @@ const MobileMenuLink: React.FC<MobileMenuLinkProps> = ({
             e.stopPropagation();
             setMenuOpen(false);
           }}
-          // to={href}
           href={href}
           className="flex w-full cursor-pointer items-center justify-between border-b border-neutral-300 py-2 text-start text-base font-medium"
         >
