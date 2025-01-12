@@ -61,7 +61,7 @@ export const Card = ({
       }
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
+    const handleTouchMove = () => {
       if (!carouselRef.current?.dataset.touchStartX) return;
       // const touchEndX = e.touches[0].clientX;
       carouselRef.current.dataset.touchStartX = ''; // Clear data after use
