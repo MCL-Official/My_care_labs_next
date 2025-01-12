@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 export default function  Testimonials() {
     const testimonials = [
@@ -34,7 +35,7 @@ export default function  Testimonials() {
                 </div>
                 <div className="mt-12">
                     <ul className="grid items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {testimonials.map((item:Testomonial, idx:any) => (
+                        {testimonials.map((item:Testomonial, idx:number) => (
                             <li key={idx} className="bg-white rounded-xl border shadow-md">
                                 <div className="p-4">
                                     {/* Display Stars */}
@@ -52,7 +53,7 @@ export default function  Testimonials() {
                                             </p>
                                         </blockquote>
                                         <div className="flex items-center gap-x-4 p-4 mt-6 bg-indigo-50">
-                                            <img src={item.avatar} className="w-16 h-16 rounded-full border-2 border-indigo-500" />
+                                            <Image alt="haresdh" width={400} height={400} src={item.avatar} className="w-16 h-16 rounded-full border-2 border-indigo-500" />
                                             <div>
                                                 <span className="block text-gray-800 font-semibold">{item.name}</span>
                                             </div>

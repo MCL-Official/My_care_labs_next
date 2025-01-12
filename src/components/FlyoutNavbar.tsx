@@ -8,7 +8,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useMotionValueEvent, AnimatePresence, useScroll, motion } from "framer-motion";
 import useMeasure from "react-use-measure";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { cardData, images, testingSolutions } from '../../utility/cardData'
+import { cardData, images, testingSolutions } from '../utility/cardData'
 import { faPhone, faStar, faChevronDown, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 

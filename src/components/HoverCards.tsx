@@ -28,40 +28,6 @@ export const HoverCards = () => {
     });
 };
 
-// useEffect(() => {
-//     const handleTouchStart = (e) => {
-//         const touchStartX = e.touches[0].clientX;
-//         carouselRef.current.touchStartX = touchStartX;
-//     };
-    
-//     const handleTouchMove = (e) => {
-//         if (!carouselRef.current.touchStartX) {
-//             return;
-//         }
-        
-//         const touchEndX = e.touches[0].clientX;
-//         const touchDiffX = carouselRef.current.touchStartX - touchEndX;
-        
-//         if (touchDiffX > 50) {
-//             scrollRight();
-//         } else if (touchDiffX < -50) {
-//             scrollLeft();
-//         }
-        
-//         carouselRef.current.touchStartX = null;
-//     };
-    
-//     const carousel = carouselRef.current;
-//     carousel.addEventListener("touchstart", handleTouchStart);
-//     carousel.addEventListener("touchmove", handleTouchMove);
-    
-//     return () => {
-//        
-//         carousel.removeEventListener("touchstart", handleTouchStart);
-//       carousel.removeEventListener("touchmove", handleTouchMove);
-//     };
-//   }, []);
-
 
     const cardData = [
         {
@@ -147,8 +113,6 @@ export const HoverCards = () => {
                     "Only on Sundays",
                     "Results within 24-48 hours"
                 ],
-
-            // "Get COVID-19/RSV/Flu PCR results in 24 hours. To speed up your testing appointment.",
             longDescription:
                 " pre-register and you’ll breeze through our testing site in about five minutes. You can always register in person as well for drop-in testing – no appointment needed.",
             timing: "11:00 AM - 2:30 PM",
